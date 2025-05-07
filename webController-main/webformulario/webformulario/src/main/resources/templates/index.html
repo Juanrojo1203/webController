@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La SuperFarmacia - Catálogo</title>
+  <link rel="icon" href="https://media.istockphoto.com/id/1276733968/es/vector/plantilla-de-dise%C3%B1o-de-ilustraci%C3%B3n-de-salud-y-vector-m%C3%A9dico-s%C3%ADmbolo-de-la-salud.jpg?s=612x612&w=0&k=20&c=q6pEAqgX6Af1vp1oXuxmZyS8WQgxiG7CXwc04ZxmzLU=" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    /* Copiamos los estilos anteriores aquí */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: #d5ecdd;
+    }
+
+    header {
+      background-color: #a4e7aa;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .search-bar input {
+      padding: 8px 10px;
+      border-radius: 20px;
+      border: none;
+      width: 250px;
+    }
+
+    nav {
+      background-color: #66d875;
+      padding: 5px 20px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .product-card {
+      background-color: rgb(163, 190, 169);
+      border-radius: 10px;
+      padding: 15px;
+      width: 220px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+    }
+
+    .product-title {
+      font-weight: bold;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .price {
+      color: #d720ce;
+      font-weight: bold;
+    }
+
+    .buy-button {
+      background-color: #d720ce;
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      margin-top: 10px;
+      width: 100%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="https://media.istockphoto.com/id/1276733968/es/vector/plantilla-de-dise%C3%B1o-de-ilustraci%C3%B3n-de-salud-y-vector-m%C3%A9dico-s%C3%ADmbolo-de-la-salud.jpg?s=612x612&w=0&k=20&c=q6pEAqgX6Af1vp1oXuxmZyS8WQgxiG7CXwc04ZxmzLU=" alt="Logo">
+    <span>Farmacia</span>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="¿Qué estás buscando?">
+  </div>
+</header>
+
+<nav>
+  <a href="/">Inicio</a>
+  <a href="/catalogo">Ver catalogo</a>
+  <a href="/carrito">Ver Carrito</a>
+</nav>
+
+<div class="products">
+  <div class="product-card" th:each="producto : ${productos}">
+    <img th:src="@{'/img/' + ${producto.imagen}}" alt="Imagen del producto">
+    <p class="product-title" th:text="${producto.nombre}"></p>
+    <p th:text="${producto.descripcion}"></p>
+    <p class="price">$<span th:text="${producto.precio}"></span></p>
+    <form th:action="@{/carrito/agregar}" method="post">
+      <input type="hidden" name="id" th:value="${producto.id}" />
+      <input type="number" name="cantidad" value="1" min="1" />
+      <button type="submit" class="buy-button">Agregar al carrito</button>
+    </form>
+  </div>
+</div>
+<!-- Información adicional sobre la farmacia con imágenes -->
+<section style="max-width: 900px; margin: 40px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+  <h2 style="color: #333; margin-bottom: 10px;">Sobre La SuperFarmacia</h2>
+  <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+    <img src="https://media.istockphoto.com/id/1276733968/es/vector/plantilla-de-dise%C3%B1o-de-ilustraci%C3%B3n-de-salud-y-vector-m%C3%A9dico-s%C3%ADmbolo-de-la-salud.jpg?s=612x612&w=0&k=20&c=q6pEAqgX6Af1vp1oXuxmZyS8WQgxiG7CXwc04ZxmzLU=" alt="Farmacéutica" style="width: 250px; border-radius: 10px;">
+    <div style="flex: 1;">
+      <p style="margin-bottom: 10px;">
+        En <strong>La SuperFarmacia</strong>, nos enorgullece ofrecer productos de alta calidad para el cuidado de tu salud y bienestar. Trabajamos con proveedores confiables y mantenemos precios accesibles para todas las familias.
+      </p>
+      <p style="margin-bottom: 10px;">
+        Nuestro catálogo incluye medicamentos, suplementos, cuidado personal, higiene y mucho más. Además, contamos con atención personalizada para ayudarte a encontrar lo que necesitas.
+      </p>
+      <p style="margin-bottom: 0;">
+        ¡Gracias por confiar en nosotros!
+      </p>
+    </div>
+  </div>
+  <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+    <img src="https://megatiendas.vtexassets.com/arquivos/ids/169368/7702057732905.jpg?v=638531021454370000.jpg" alt="Medicamentos" style="height: 160px; border-radius: 10px;">
+    <img src="https://www.drogueriascafam.com.co/49439-large_default/comprar-en-cafam-loratadina-10-mg-caja-con-20-tabletas-precio.jpg" alt="Suplementos" style="height: 160px; border-radius: 10px;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdpQ_FuGsWAK02wR_RIFSLsc9JYvBeiwtxfw&s" alt="Estantería de productos" style="height: 160px; border-radius: 10px;">
+  </div>
+</section>
+
+<!-- Footer -->
+<footer style="background-color: #a4e7aa; color: white; text-align: center; padding: 20px; margin-top: 40px;">
+  <p>&copy; 2025 La SuperFarmacia. Todos los derechos reservados.</p>
+  <p>Dirección: Av. Salud 123, Ciudad Bienestar | Tel: (123) 456-7890</p>
+  <p>Horario de atención: Lunes a Sábado de 8:00 a 20:00</p>
+</footer>
+
+
+</body>
+</html>
