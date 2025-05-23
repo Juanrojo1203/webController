@@ -122,7 +122,7 @@
 
 <div class="products">
   <div class="product-card" th:each="producto : ${productos}">
-    <img th:src="@{'/img/' + ${producto.imagen}}" th:alt="${producto.nombre}" />
+    <img th:src="@{'/imagen/' + ${producto.imagen}}" th:alt="${producto.nombre}" />
     <p class="product-title" th:text="${producto.nombre}"></p>
     <p class="price">$<span th:text="${producto.precio}"></span></p>
     <form th:action="@{/carrito/agregar}" method="post">

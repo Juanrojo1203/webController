@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.formulario.webformulario.services.CarritoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class CarritoController {
@@ -16,6 +18,8 @@ public class CarritoController {
     @Autowired
     private CatalogoController catalogoController;
 
+    private static final Logger logger = LoggerFactory.getLogger(CarritoController.class);
+
     @PostMapping("/carrito/agregar")
     public String agregarProducto(@RequestParam Long id, @RequestParam int cantidad) {
         // Verificar que el catálogo no sea nulo y obtener el producto
@@ -23,8 +27,11 @@ public class CarritoController {
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .ifPresentOrElse(
-                    p -> carritoService.agregarProducto(p, cantidad), // Agregar producto si existe
-                    () -> System.out.println("Producto no encontrado en el catálogo") // Log para depuración
+                    p -> {
+                        carritoService.agregarProducto(p, cantidad);
+                        logger.info("Producto agregado al carrito y preparado para confirmación: {}", p.getNombre());
+                    },
+                    () -> logger.warn("Producto no encontrado en el catálogo")
                 );
         return "redirect:/carrito"; // Redirigir al carrito
     }
@@ -52,7 +59,7 @@ public class CarritoController {
     @PostMapping("/pagar")
     public String pagar(Model model) {
         // Obtener los items y el total antes de vaciar el carrito
-        var items = carritoService.obtenerItems(); // Obtener los productos del carrito
+        var items = carritoService.obtenerItemsParaConfirmacion(); // Obtener los productos del carrito para confirmación
         var total = carritoService.calcularTotal(); // Calcular el total del carrito
 
         // Pasar los datos al modelo
@@ -64,5 +71,5 @@ public class CarritoController {
 
         return "confirmacion"; // Renderizar la plantilla confirmacion.html
     }
-    
+
 }

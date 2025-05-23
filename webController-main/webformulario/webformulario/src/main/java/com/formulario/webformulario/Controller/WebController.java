@@ -24,11 +24,6 @@ public class WebController {
         return "index";  // Página principal
     }
 
-    @GetMapping("/confirmacion")
-    public String confirmacion(Model model) {
-        model.addAttribute("items", items);  // Pasar la lista de items a la vista de confirmación
-        return "confirmacion";  // Página de confirmación
-    }
 
 
     public String getMethodName(@RequestParam String param) {

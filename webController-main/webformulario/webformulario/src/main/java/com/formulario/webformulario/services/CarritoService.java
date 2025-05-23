@@ -1,4 +1,3 @@
-
 package com.formulario.webformulario.services;
 
 
@@ -22,7 +21,7 @@ public class CarritoService {
             }
         });
     }
-    
+
     //Ver carrito
     public ItemCarrito verCarrito(Long id) {
         return carrito.get(id);
@@ -42,11 +41,16 @@ public class CarritoService {
         return carrito.values();
     }
 
-    public double calcularTotal() {
-        return carrito.values().stream().mapToDouble(ItemCarrito::getSubtotal).sum();
+    public int calcularTotal() {
+        return carrito.values().stream().mapToInt(ItemCarrito::getSubtotal).sum();
     }
 
     public void vaciarCarrito() {
         carrito.clear();
+    }
+
+    // Ensure items added to the cart are also available for confirmation
+    public Collection<ItemCarrito> obtenerItemsParaConfirmacion() {
+        return new ArrayList<>(carrito.values());
     }
 }
