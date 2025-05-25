@@ -6,142 +6,7 @@
   <title>Carrito de Compras - La SuperFarmacia</title>
   <link rel="icon" href="/img/LOGO.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-      background-color: #d5ecdd;
-    }
-
-    header {
-      background-color: #a4e7aa;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      height: 40px;
-      margin-right: 10px;
-    }
-
-    .search-bar input {
-      padding: 8px 10px;
-      border-radius: 20px;
-      border: none;
-      width: 250px;
-    }
-
-    nav {
-      background-color: #66d875;
-      padding: 5px 20px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .carrito {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .carrito h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 10px;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    td img {
-      max-width: 50px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      border-radius: 4px;
-    }
-
-    th {
-      background-color: #a4e7aa;
-      color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .acciones button {
-      margin: 0 5px;
-      padding: 5px 10px;
-      background-color: #d720ce;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .total {
-      margin-top: 20px;
-      text-align: right;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .finalizar {
-      text-align: right;
-      margin-top: 20px;
-    }
-
-    .finalizar button {
-      background-color: #66d875;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .seguir-comprando {
-      display: inline-block;
-      background-color: #66d875;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 16px;
-      margin-right: 10px;
-    }
-
-    .seguir-comprando:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body>
 
@@ -156,8 +21,10 @@
 </header>
 
 <nav>
-  <a href="/">Inicio</a>
-  <a href="/catalogo">Catálogo</a>
+  <a href="/" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Inicio</a>
+  <a href="/catalogo" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver catálogo</a>
+  <a href="/carrito" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver Carrito</a>
+
 </nav>
 
 <div class="carrito">
@@ -175,7 +42,7 @@
     </thead>
     <tbody>
       <tr th:each="item : ${carrito}">
-        <td><img th:src="@{'/imagen/' + ${item.producto.imagen}}" th:alt="${item.producto.nombre}" style="width: 50px; height: auto;" onerror="this.style.display='none'" /></td>
+        <td><img th:src="@{'/img/' + ${item.producto.imagen}}" th:alt="${item.producto.nombre}" style="width: 50px; height: auto;" onerror="this.style.display='none'" /></td>
         <td th:text="${item.producto.nombre}"></td>
         <td>$<span th:text="${item.producto.precio}"></span></td>
         <td>

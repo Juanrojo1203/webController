@@ -31,9 +31,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/")
                 .setCachePeriod(3600); // Cache por 1 hora
 
-        // Configuración específica para imágenes en /img/
+        // Configuración específica para imágenes en /img/ (AHORA JPG)
         registry.addResourceHandler("/img/**")
-                .addResourceLocations("classpath:/static/img/", "classpath:/static/css/img/")
+                .addResourceLocations("classpath:/static/img/")
                 .setCachePeriod(3600);
 
         // Configuración para CSS
@@ -41,6 +41,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/css/")
                 .setCachePeriod(3600);
 
+        // Configuración para JavaScript
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("classpath:/static/js/")
+                .setCachePeriod(3600);
+
         logger.info("Manejadores de recursos estáticos configurados exitosamente");
+        logger.info("📁 /img/** -> classpath:/static/img/ (JPG)");
     }
 }

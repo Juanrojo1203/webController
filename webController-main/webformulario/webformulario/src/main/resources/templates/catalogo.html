@@ -6,102 +6,7 @@
   <title>Catálogo - La SuperFarmacia</title>
   <link rel="icon" href="https://media.istockphoto.com/id/1276733968/es/vector/plantilla-de-dise%C3%B1o-de-ilustraci%C3%B3n-de-salud-y-vector-m%C3%A9dico-s%C3%ADmbolo-de-la-salud.jpg?s=612x612&w=0&k=20&c=q6pEAqgX6Af1vp1oXuxmZyS8WQgxiG7CXwc04ZxmzLU=" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-      background-color: #d5ecdd;
-    }
-
-    header {
-      background-color: #a4e7aa;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      height: 40px;
-      margin-right: 10px;
-    }
-
-    .search-bar input {
-      padding: 8px 10px;
-      border-radius: 20px;
-      border: none;
-      width: 250px;
-    }
-
-    nav {
-      background-color: #66d875;
-      padding: 5px 20px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      padding: 30px;
-    }
-
-    .product-card {
-      background-color: rgb(163, 190, 169);
-      border-radius: 10px;
-      padding: 15px;
-      width: 220px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .product-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: contain;
-    }
-
-    .product-title {
-      font-weight: bold;
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    .price {
-      color: #d720ce;
-      font-weight: bold;
-      font-size: 15px;
-    }
-
-    .buy-button {
-      background-color: #d720ce;
-      color: white;
-      border: none;
-      padding: 8px;
-      border-radius: 5px;
-      margin-top: 10px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    .buy-button:hover {
-      background-color: #b51aad;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body>
 
@@ -116,13 +21,17 @@
 </header>
 
 <nav>
-  <a href="/">Inicio</a>
-  <a href="/carrito">Ver Carrito</a>
+  <a href="/" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Inicio</a>
+  <a href="/catalogo" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver catálogo</a>
+  <a href="/carrito" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver Carrito</a>
 </nav>
 
 <div class="products">
   <div class="product-card" th:each="producto : ${productos}">
-    <img th:src="@{'/imagen/' + ${producto.imagen}}" th:alt="${producto.nombre}" onerror="this.style.display='none'" />
+    <img th:src="@{'/img/' + ${producto.imagen}}"
+         th:alt="${producto.nombre}"
+         style="width: 100%; height: 120px; object-fit: contain;"
+         onerror="this.style.display='none'" />
     <p class="product-title" th:text="${producto.nombre}"></p>
     <p class="price">$<span th:text="${producto.precio}"></span></p>
     <form th:action="@{/carrito/agregar}" method="post">

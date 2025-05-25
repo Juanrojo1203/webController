@@ -6,98 +6,8 @@
   <title>La SuperFarmacia - Catálogo</title>
   <link rel="icon" href="https://media.istockphoto.com/id/1276733968/es/vector/plantilla-de-dise%C3%B1o-de-ilustraci%C3%B3n-de-salud-y-vector-m%C3%A9dico-s%C3%ADmbolo-de-la-salud.jpg?s=612x612&w=0&k=20&c=q6pEAqgX6Af1vp1oXuxmZyS8WQgxiG7CXwc04ZxmzLU=" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <style>
-    /* Copiamos los estilos anteriores aquí */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-      background-color: #d5ecdd;
-    }
-
-    header {
-      background-color: #a4e7aa;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      height: 40px;
-      margin-right: 10px;
-    }
-
-    .search-bar input {
-      padding: 8px 10px;
-      border-radius: 20px;
-      border: none;
-      width: 250px;
-    }
-
-    nav {
-      background-color: #66d875;
-      padding: 5px 20px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 20px;
-    }
-
-    .product-card {
-      background-color: rgb(163, 190, 169);
-      border-radius: 10px;
-      padding: 15px;
-      width: 220px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .product-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: contain;
-    }
-
-    .product-title {
-      font-weight: bold;
-      margin: 10px 0;
-      font-size: 14px;
-    }
-
-    .price {
-      color: #d720ce;
-      font-weight: bold;
-    }
-
-    .buy-button {
-      background-color: #d720ce;
-      color: white;
-      border: none;
-      padding: 8px;
-      border-radius: 5px;
-      margin-top: 10px;
-      width: 100%;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/estilos.css(v='3.0')}">
+  <link rel="stylesheet" th:href="@{/css/carrusel.css(v='3.0')}">
 </head>
 <body>
 
@@ -112,22 +22,73 @@
 </header>
 
 <nav>
-  <a href="/">Inicio</a>
-  <a href="/catalogo">Ver catalogo</a>
-  <a href="/carrito">Ver Carrito</a>
+  <a href="/" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Inicio</a>
+  <a href="/catalogo" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver catálogo</a>
+  <a href="/carrito" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver Carrito</a>
 </nav>
 
-<div class="products">
-  <div class="product-card" th:each="producto : ${productos}">
-    <img th:src="@{/img/{imagen}(imagen=${producto.imagen})}" alt="Imagen del producto">
-    <p class="product-title" th:text="${producto.nombre}"></p>
-    <p th:text="${producto.descripcion}"></p>
-    <p class="price">$<span th:text="${producto.precio}"></span></p>
-    <form th:action="@{/carrito/agregar}" method="post">
-      <input type="hidden" name="id" th:value="${producto.id}" />
-      <input type="number" name="cantidad" value="1" min="1" />
-      <button type="submit" class="buy-button">Agregar al carrito</button>
-    </form>
+<!-- Carrusel generado dinámicamente desde CarruselController -->
+<div class="carousel-container">
+  <div class="carousel-header">
+    <h2>🏥 Productos Destacados de Farmacia</h2>
+    <p>Descubre nuestra amplia gama de medicamentos y productos para tu salud</p>
+  </div>
+
+  <div class="carousel-wrapper">
+    <div id="carouselTrack" class="carousel-track">
+      <!-- Slides dinámicos desde backend -->
+      <div th:each="slide, iterStat : ${slidesCarrusel}" class="carousel-slide">
+        <img th:src="${slide.imagen}" th:alt="${slide.titulo}">
+        <div class="carousel-slide-content">
+          <h3 th:text="${slide.titulo}">Título del slide</h3>
+          <p th:text="${slide.descripcion}">Descripción del slide</p>
+        </div>
+      </div>
+
+      <!-- Fallback: Slides estáticos si no hay datos del backend -->
+      <div th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" class="carousel-slide">
+        <img src="https://images.unsplash.com/photo-1576671081837-49000212a370?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80" alt="Medicamentos">
+        <div class="carousel-slide-content">
+          <h3>Medicamentos de Calidad</h3>
+          <p>Amplio catálogo de medicamentos genéricos y de marca</p>
+        </div>
+      </div>
+
+      <div th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" class="carousel-slide">
+        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80" alt="Vitaminas">
+        <div class="carousel-slide-content">
+          <h3>Vitaminas y Suplementos</h3>
+          <p>Fortalece tu sistema inmunológico</p>
+        </div>
+      </div>
+
+      <div th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" class="carousel-slide">
+        <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80" alt="Cuidado Personal">
+        <div class="carousel-slide-content">
+          <h3>Cuidado Personal</h3>
+          <p>Productos de higiene para toda la familia</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <button onclick="moveSlide(-1)" class="carousel-nav prev">‹</button>
+    <button onclick="moveSlide(1)" class="carousel-nav next">›</button>
+  </div>
+
+  <!-- Indicadores dinámicos -->
+  <div class="carousel-indicators">
+    <!-- Indicadores dinámicos desde backend -->
+    <span th:each="slide, iterStat : ${slidesCarrusel}"
+          th:onclick="'currentSlide(' + ${iterStat.index} + ')'"
+          class="carousel-indicator"
+          th:classappend="${iterStat.first} ? 'active' : ''">
+    </span>
+
+    <!-- Indicadores fallback si no hay datos del backend -->
+    <span th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" onclick="currentSlide(0)" class="carousel-indicator active"></span>
+    <span th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" onclick="currentSlide(1)" class="carousel-indicator"></span>
+    <span th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" onclick="currentSlide(2)" class="carousel-indicator"></span>
   </div>
 </div>
 
@@ -153,6 +114,13 @@
     <img src="https://www.drogueriascafam.com.co/49439-large_default/comprar-en-cafam-loratadina-10-mg-caja-con-20-tabletas-precio.jpg" alt="Suplementos" style="height: 160px; border-radius: 10px;">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdpQ_FuGsWAK02wR_RIFSLsc9JYvBeiwtxfw&s" alt="Estantería de productos" style="height: 160px; border-radius: 10px;">
   </div>
+
+  <!-- Botón para ir al catálogo -->
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="/catalogo" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+      🛒 Ver Catálogo Completo
+    </a>
+  </div>
 </section>
 
 <!-- Footer -->
@@ -162,6 +130,8 @@
   <p>Horario de atención: Lunes a Sábado de 8:00 a 9:00</p>
 </footer>
 
+<!-- JavaScript del carrusel manejado por CarruselController -->
+<script th:src="@{/js/carrusel.js(v='3.0')}"></script>
 
 </body>
 </html>

@@ -1,147 +1,535 @@
-/* Definición global de la página */
-html, body { 
-    height: 100%; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
-    margin: 0; /* Elimina márgenes por defecto */
-    padding: 0; /* Elimina relleno por defecto */
-    font-family: Arial, sans-serif; /* Fuente por defecto */
-    background-color: #f0f2f5; /* Fondo gris claro */
+/* ========================================
+   ESTILOS GLOBALES Y RESET
+   ======================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
-/* Estilos del cuerpo */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
 body {
+    background-color: #d5ecdd;
     display: flex;
-    flex-direction: column; /* Disposición en columna */
+    flex-direction: column;
 }
 
-/* El main debe ocupar el espacio disponible */
 main {
     flex: 1;
 }
 
-/* Estilos para el encabezado */
+/* ========================================
+   HEADER Y NAVEGACIÓN
+   ======================================== */
+
 header {
-    background-color: #333; /* Fondo oscuro */
-    color: white; /* Texto blanco */
-    text-align: center; /* Centra el texto */
-    padding: 10px;
+    background-color: #a4e7aa;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Menú de navegación */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.search-bar input {
+    padding: 8px 10px;
+    border-radius: 20px;
+    border: none;
+    width: 250px;
+}
+
 nav {
-    background-color: #444; /* Fondo ligeramente más claro */
-    text-align: center; /* Centra el contenido */
+    background-color: #66d875;
+    padding: 5px 20px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
 }
 
-/* Estilos de los enlaces del menú */
 nav ul {
-    list-style-type: none; /* Elimina los puntos de lista */
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
 nav ul li {
-    display: inline; /* Muestra los elementos en línea */
-    margin-right: 15px; /* Espaciado entre elementos */
+    display: inline;
+    margin-right: 15px;
 }
 
 nav ul li a {
-    color: white; /* Texto blanco */
-    text-decoration: none; /* Elimina subrayado */
+    color: white;
+    text-decoration: none;
 }
 
-/* Estilos del contenedor del formulario */
+/* ========================================
+   BOTONES Y ENLACES
+   ======================================== */
+
+.color-btn {
+    background-color: #1f7e2c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.color-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3) !important;
+    background: linear-gradient(135deg, #b84dbf, #e535db) !important;
+}
+
+button {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #004a99;
+}
+
+.buy-button {
+    background-color: #d720ce;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.buy-button:hover {
+    background-color: #b51aad;
+}
+
+/* ========================================
+   PRODUCTOS Y CATÁLOGO
+   ======================================== */
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+.product-card {
+    background-color: rgb(163, 190, 169);
+    border-radius: 10px;
+    padding: 15px;
+    width: 220px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.product-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+}
+
+.product-title {
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.price {
+    color: #d720ce;
+    font-weight: bold;
+}
+
+/* ========================================
+   CARRUSEL - VERSIÓN SIMPLIFICADA QUE FUNCIONA
+   ======================================== */
+
+.carousel-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    position: relative;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.carousel-header {
+    background: linear-gradient(135deg, #a4e7aa, #66d875);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.carousel-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.carousel-header p {
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+}
+
+.carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    width: 500%; /* 5 slides × 100% */
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    width: 20%; /* 100% ÷ 5 slides */
+    height: 100%;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-slide-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    padding: 30px 20px 20px;
+    text-align: center;
+}
+
+.carousel-slide-content h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.carousel-slide-content p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.9);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.carousel-nav:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav.prev {
+    left: 20px;
+}
+
+.carousel-nav.next {
+    right: 20px;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-indicator.active {
+    background: #66d875;
+    transform: scale(1.2);
+}
+
+/* ========================================
+   CARRITO DE COMPRAS
+   ======================================== */
+
+.carrito {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.carrito h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td img {
+    max-width: 50px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+}
+
+th {
+    background-color: #a4e7aa;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.acciones button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #d720ce;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.total {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.finalizar {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.finalizar button {
+    background-color: #66d875;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.seguir-comprando {
+    display: inline-block;
+    background-color: #66d875;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.seguir-comprando:hover {
+    background-color: #0056b3;
+}
+
+/* ========================================
+   CONFIRMACIÓN DE COMPRA
+   ======================================== */
+
+.recibo {
+    max-width: 700px;
+    background: white;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.recibo h2 {
+    text-align: center;
+    color: #2d2d2d;
+    margin-bottom: 20px;
+}
+
+.recibo p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.recibo table {
+    margin-top: 20px;
+}
+
+.recibo th, .recibo td {
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+}
+
+.volver {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.volver a {
+    background-color: #66d875;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.volver a:hover {
+    background-color: #50be60;
+}
+
+/* ========================================
+   FORMULARIOS Y ELEMENTOS LEGACY
+   ======================================== */
+
 .form-container {
     width: 60%;
-    margin: 30px auto; /* Centra el contenedor */
+    margin: 30px auto;
     padding: 20px;
-    background-color: white; /* Fondo blanco */
+    background-color: white;
     border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos de los grupos del formulario */
 .form-group {
     margin-bottom: 15px;
 }
 
 .form-group label {
-    font-weight: bold; /* Negrita en las etiquetas */
+    font-weight: bold;
 }
 
 .form-group input,
 .form-group select {
-    width: 100%; /* Asegura que los campos ocupen todo el ancho */
+    width: 100%;
     padding: 8px;
-    margin-top: 5px; /* Espaciado superior */
+    margin-top: 5px;
 }
 
-/* Estilos de los botones */
-button {
-    background-color: #0066cc; /* Azul */
-    color: white; /* Texto blanco */
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
-}
-
-button:hover {
-    background-color: #004a99; /* Azul más oscuro al pasar el ratón */
-}
-
-/* Estilos del selector de carros (radio buttons con imágenes) */
 .carro-selector {
     display: flex;
-    justify-content: space-around; /* Distribuye los elementos con espacio entre ellos */
+    justify-content: space-around;
     margin-top: 10px;
-    gap: 20px; /* Espaciado entre los elementos */
+    gap: 20px;
 }
 
 .carro-selector label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer; /* Cursor como mano al pasar sobre la imagen */
+    cursor: pointer;
 }
 
 .carro-selector img {
     width: 100px;
     height: 100px;
-    object-fit: cover; /* Mantiene la imagen en su proporción */
+    object-fit: cover;
     border-radius: 8px;
     margin-bottom: 5px;
-    border: 2px solid transparent; /* Borde por defecto */
-    transition: border 0.3s ease; /* Efecto de transición suave para el borde */
+    border: 2px solid transparent;
+    transition: border 0.3s ease;
 }
 
 .carro-selector input[type="radio"] {
-    display: none; /* Oculta el radio button */
+    display: none;
 }
 
 .carro-selector input[type="radio"]:checked + img {
-    border: 2px solid #0066cc; /* Borde azul cuando está seleccionado */
+    border: 2px solid #0066cc;
 }
 
 .carro-selector span {
     margin-top: 5px;
-    font-weight: bold; /* Negrita en el nombre del carro */
+    font-weight: bold;
 }
 
-/* Estilos para el grid de las tarjetas de carros */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Se adapta al tamaño de la pantalla */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     padding: 20px;
-    max-width: 1000px; /* Ancho máximo */
+    max-width: 1000px;
     margin: auto;
 }
 
-/* Estilos para cada tarjeta de carro */
 .car-card {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra de la tarjeta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
     text-align: center;
 }
@@ -149,7 +537,7 @@ button:hover {
 .car-card img {
     width: 100%;
     height: 150px;
-    object-fit: cover; /* Mantiene la proporción de la imagen */
+    object-fit: cover;
     border-radius: 6px;
     margin-bottom: 10px;
 }
@@ -162,11 +550,10 @@ button:hover {
     margin: 5px 0;
 }
 
-/* Estilos para los botones dentro de las tarjetas */
 .btn-group {
     display: flex;
-    justify-content: center; /* Centra los botones */
-    gap: 10px; /* Espaciado entre botones */
+    justify-content: center;
+    gap: 10px;
     margin-top: 10px;
 }
 
@@ -180,13 +567,17 @@ button:hover {
 }
 
 .btn-group button:hover {
-    background-color: #004a99; /* Azul más oscuro al pasar el ratón */
+    background-color: #004a99;
 }
 
-/* Estilos para el pie de página */
+/* ========================================
+   FOOTER
+   ======================================== */
+
 footer {
-    background-color: #333; /* Fondo oscuro */
-    color: white; /* Texto blanco */
-    text-align: center; /* Centra el texto */
-    padding: 10px;
+    background-color: #a4e7aa;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
 }
