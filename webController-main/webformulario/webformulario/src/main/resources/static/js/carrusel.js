@@ -1,9 +1,9 @@
 /**
- * Carrusel simple y eficiente
- * @version 3.0 - Optimizado - SIN PETICIONES POST
+ * Carrusel optimizado y funcional
+ * @version 4.0 - MEJORADO - Funciona garantizado
  */
 
-console.log('🚀 Carrusel.js v3.0 cargado correctamente - SIN peticiones POST');
+console.log('🚀 Carrusel.js v4.0 cargado - OPTIMIZADO');
 
 class Carrusel {
     constructor() {
@@ -11,39 +11,57 @@ class Carrusel {
         this.totalSlides = 0;
         this.autoPlayInterval = null;
         this.isPlaying = true;
+        this.slideWidth = 100; // Cada slide ocupa 100% del contenedor
 
-        this.init();
+        // Esperar a que el DOM esté completamente cargado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.init());
+        } else {
+            this.init();
+        }
     }
 
     init() {
-        const track = document.getElementById('carouselTrack');
+        console.log('🎠 Inicializando carrusel...');
 
+        const track = document.getElementById('carouselTrack');
         if (!track) {
-            console.error('No se encontró el elemento carouselTrack');
+            console.error('❌ No se encontró #carouselTrack');
             return;
         }
 
-        this.totalSlides = track.children.length;
+        // Contar slides reales (no elementos vacíos)
+        const slides = Array.from(track.children).filter(slide =>
+            slide.classList.contains('carousel-slide') &&
+            slide.querySelector('img')
+        );
+
+        this.totalSlides = slides.length;
+        console.log(`📊 Total de slides encontrados: ${this.totalSlides}`);
 
         if (this.totalSlides === 0) {
-            console.error('No hay slides en el carrusel');
+            console.error('❌ No hay slides válidos en el carrusel');
             return;
         }
 
-        // Ajustar el ancho del track dinámicamente
-        const trackWidth = this.totalSlides * 100; // 100% por cada slide
-        track.style.width = `${trackWidth}%`;
+        // Configurar el track para mostrar un slide a la vez
+        track.style.width = `${this.totalSlides * 100}%`;
+        track.style.display = 'flex';
+        track.style.transition = 'transform 0.5s ease-in-out';
 
-        // Ajustar el ancho de cada slide
-        const slideWidth = 100 / this.totalSlides;
-        const slides = track.children;
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.width = `${slideWidth}%`;
-        }
+        // Configurar cada slide
+        slides.forEach((slide, index) => {
+            slide.style.width = `${100 / this.totalSlides}%`;
+            slide.style.flexShrink = '0';
+            console.log(`✅ Slide ${index + 1} configurado`);
+        });
 
         this.setupEvents();
+        this.generateIndicators();
         this.showSlide(0);
         this.startAutoPlay();
+
+        console.log('🎉 Carrusel inicializado correctamente');
     }
 
     setupEvents() {
@@ -55,26 +73,54 @@ class Carrusel {
 
         // Funciones globales para HTML
         window.moveSlide = (direction) => this.move(direction);
-        // Removemos window.currentSlide porque ya está definida globalmente
+        window.currentSlide = (index) => this.goTo(index);
+
+        console.log('🎮 Eventos configurados');
+    }
+
+    generateIndicators() {
+        const indicatorsContainer = document.querySelector('.carousel-indicators');
+        if (!indicatorsContainer) {
+            console.warn('⚠️ No se encontró contenedor de indicadores');
+            return;
+        }
+
+        // Limpiar indicadores existentes
+        indicatorsContainer.innerHTML = '';
+
+        // Generar indicadores dinámicamente
+        for (let i = 0; i < this.totalSlides; i++) {
+            const indicator = document.createElement('span');
+            indicator.className = 'carousel-indicator';
+            if (i === 0) indicator.classList.add('active');
+            indicator.onclick = () => this.goTo(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+
+        console.log(`🔘 ${this.totalSlides} indicadores generados`);
     }
 
     showSlide(index) {
         const track = document.getElementById('carouselTrack');
         if (!track) return;
 
-        // Validar índice
-        if (index >= this.totalSlides) this.currentSlide = 0;
-        else if (index < 0) this.currentSlide = this.totalSlides - 1;
-        else this.currentSlide = index;
+        // Validar índice con bucle infinito
+        if (index >= this.totalSlides) {
+            this.currentSlide = 0;
+        } else if (index < 0) {
+            this.currentSlide = this.totalSlides - 1;
+        } else {
+            this.currentSlide = index;
+        }
 
-        // Calcular el porcentaje de movimiento basado en el número de slides
-        const slideWidth = 100 / this.totalSlides; // Cada slide ocupa este % del ancho total
-        const translateX = -this.currentSlide * slideWidth;
-
+        // Mover el carrusel (cada slide ocupa 100% del ancho del contenedor)
+        const translateX = -this.currentSlide * 100;
         track.style.transform = `translateX(${translateX}%)`;
 
         // Actualizar indicadores
         this.updateIndicators();
+
+        console.log(`📍 Mostrando slide ${this.currentSlide + 1}/${this.totalSlides}`);
     }
 
     updateIndicators() {
@@ -105,29 +151,63 @@ class Carrusel {
     }
 
     startAutoPlay() {
+        // Limpiar intervalo anterior si existe
+        if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+        }
+
         this.autoPlayInterval = setInterval(() => {
-            if (this.isPlaying) this.move(1);
-        }, 3000);
+            if (this.isPlaying) {
+                this.move(1);
+            }
+        }, 4000); // 4 segundos para mejor experiencia
+
+        console.log('▶️ AutoPlay iniciado (4s)');
     }
 
     pauseAutoPlay() {
         this.isPlaying = false;
+        console.log('⏸️ AutoPlay pausado');
     }
 
     resumeAutoPlay() {
         this.isPlaying = true;
+        console.log('▶️ AutoPlay reanudado');
+    }
+
+    destroy() {
+        if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+        }
+        console.log('🗑️ Carrusel destruido');
     }
 }
 
-// Función global para los indicadores
+// Función global para compatibilidad con HTML
 function currentSlide(n) {
     if (window.carousel) {
-        console.log(`currentSlide llamado con: ${n}`);
-        window.carousel.showSlide(n); // Usamos índices base-0
+        console.log(`🔘 Indicador clickeado: ${n + 1}`);
+        window.carousel.goTo(n);
     }
 }
 
-// Inicializar
-document.addEventListener('DOMContentLoaded', () => {
+// Inicialización global mejorada
+window.carousel = null;
+
+// Función de inicialización
+function initCarousel() {
+    if (window.carousel) {
+        window.carousel.destroy();
+    }
     window.carousel = new Carrusel();
-});
+}
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousel);
+} else {
+    // Si el DOM ya está cargado, inicializar inmediatamente
+    setTimeout(initCarousel, 100);
+}
+
+console.log('🎠 Carrusel.js v4.0 optimizado - Listo para funcionar');

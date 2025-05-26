@@ -24,7 +24,6 @@
   <table>
     <thead>
       <tr>
-        <th>Imagen</th>
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Precio</th>
@@ -32,7 +31,6 @@
     </thead>
     <tbody>
       <tr th:each="item : ${carrito}">
-        <td><img th:src="@{'/imagen/' + ${item.producto.imagen}}" th:alt="${item.producto.nombre}" style="width: 50px; height: auto;" onerror="this.style.display='none'" /></td>
         <td th:text="${item.producto.nombre}"></td>
         <td th:text="${item.cantidad}"></td>
         <td>$<span th:text="${item.producto.precio}"></span></td>

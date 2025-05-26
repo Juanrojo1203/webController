@@ -27,7 +27,7 @@ public class ConfirmacionController {
         logger.info("Total amount: {}", total);
         logger.info("Items for confirmation (detailed):");
         items.forEach(item -> logger.info("Producto: {}, Cantidad: {}, Precio: {}",
-            item.getProducto().getNombre(), item.getCantidad(), item.getProducto().getPrecio()));
+        item.getProducto().getNombre(), item.getCantidad(), item.getProducto().getPrecio()));
 
         model.addAttribute("carrito", items); // Lista de productos en el carrito
         model.addAttribute("total", total); // Total del carrito

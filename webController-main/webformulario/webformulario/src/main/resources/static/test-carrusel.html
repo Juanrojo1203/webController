@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎠 Test Carrusel Optimizado</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="stylesheet" href="/css/carrusel.css">
+    <style>
+        body { background: #f0f8ff; padding: 20px; }
+        .test-info { background: white; padding: 20px; margin: 20px 0; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; font-weight: bold; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        .debug-console { background: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>🎠 Test del Carrusel Optimizado v4.0</h1>
+    
+    <div class="test-info">
+        <h2>📊 Estado del Carrusel</h2>
+        <div id="carruselStatus" class="status warning">Inicializando...</div>
+        <div id="slidesInfo" class="status warning">Contando slides...</div>
+        <div id="indicatorsInfo" class="status warning">Verificando indicadores...</div>
+        <div id="autoplayInfo" class="status warning">Verificando autoplay...</div>
+    </div>
+
+    <!-- Carrusel de prueba -->
+    <div class="carousel-container">
+        <div class="carousel-header">
+            <h2>🏥 Test - Productos Destacados</h2>
+            <p>Carrusel de prueba con 5 slides</p>
+        </div>
+
+        <div class="carousel-wrapper">
+            <div id="carouselTrack" class="carousel-track">
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1576671081837-49000212a370?ixlib=rb-4.0.3&auto=format&fit=crop&w=2126&q=80" alt="Medicamentos">
+                    <div class="carousel-slide-content">
+                        <h3>Medicamentos de Calidad</h3>
+                        <p>Amplio catálogo de medicamentos genéricos y de marca</p>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2126&q=80" alt="Vitaminas">
+                    <div class="carousel-slide-content">
+                        <h3>Vitaminas y Suplementos</h3>
+                        <p>Fortalece tu sistema inmunológico</p>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?ixlib=rb-4.0.3&auto=format&fit=crop&w=2126&q=80" alt="Cuidado Personal">
+                    <div class="carousel-slide-content">
+                        <h3>Cuidado Personal</h3>
+                        <p>Productos de higiene para toda la familia</p>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=2126&q=80" alt="Primeros Auxilios">
+                    <div class="carousel-slide-content">
+                        <h3>Primeros Auxilios</h3>
+                        <p>Kit completo para emergencias médicas</p>
+                    </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1585435557343-3b092031d4c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2126&q=80" alt="Atención Profesional">
+                    <div class="carousel-slide-content">
+                        <h3>Atención Profesional</h3>
+                        <p>Farmacéuticos certificados para asesorarte</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de navegación -->
+            <button onclick="moveSlide(-1)" class="carousel-nav prev">‹</button>
+            <button onclick="moveSlide(1)" class="carousel-nav next">›</button>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+            <!-- Se generarán dinámicamente -->
+        </div>
+    </div>
+
+    <div class="test-info">
+        <h2>🎮 Controles de Prueba</h2>
+        <button onclick="testPrev()" style="background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;">⬅️ Anterior</button>
+        <button onclick="testNext()" style="background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;">➡️ Siguiente</button>
+        <button onclick="testGoTo(2)" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;">🎯 Ir al Slide 3</button>
+        <button onclick="toggleAutoplay()" style="background: #ffc107; color: black; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;">⏯️ Toggle AutoPlay</button>
+        <button onclick="reinitCarousel()" style="background: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;">🔄 Reiniciar</button>
+    </div>
+
+    <div class="test-info">
+        <h2>🔍 Console Debug</h2>
+        <div id="debugConsole" class="debug-console">
+            Esperando logs del carrusel...
+        </div>
+        <button onclick="clearDebug()" style="background: #6c757d; color: white; padding: 5px 10px; border: none; border-radius: 3px; margin-top: 10px; cursor: pointer;">🗑️ Limpiar</button>
+    </div>
+
+    <div class="test-info">
+        <h2>🔗 Enlaces</h2>
+        <a href="/" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin: 5px; display: inline-block;">🏠 Ir al Index</a>
+        <a href="/catalogo" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin: 5px; display: inline-block;">🛒 Ir al Catálogo</a>
+    </div>
+
+    <!-- JavaScript del carrusel -->
+    <script src="/js/carrusel.js?v=4.0"></script>
+
+    <!-- Script de pruebas -->
+    <script>
+        let debugLogs = [];
+        
+        // Interceptar console.log para mostrar en la página
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            debugLogs.push(`[${new Date().toLocaleTimeString()}] ${message}`);
+            updateDebugConsole();
+        };
+
+        function updateDebugConsole() {
+            const console = document.getElementById('debugConsole');
+            console.innerHTML = debugLogs.slice(-20).join('\n');
+            console.scrollTop = console.scrollHeight;
+        }
+
+        function clearDebug() {
+            debugLogs = [];
+            updateDebugConsole();
+        }
+
+        // Funciones de prueba
+        function testPrev() {
+            console.log('🧪 Test: Botón Anterior');
+            if (window.carousel) window.carousel.move(-1);
+        }
+
+        function testNext() {
+            console.log('🧪 Test: Botón Siguiente');
+            if (window.carousel) window.carousel.move(1);
+        }
+
+        function testGoTo(index) {
+            console.log(`🧪 Test: Ir al slide ${index + 1}`);
+            if (window.carousel) window.carousel.goTo(index);
+        }
+
+        function toggleAutoplay() {
+            console.log('🧪 Test: Toggle AutoPlay');
+            if (window.carousel) {
+                if (window.carousel.isPlaying) {
+                    window.carousel.pauseAutoPlay();
+                } else {
+                    window.carousel.resumeAutoPlay();
+                }
+            }
+        }
+
+        function reinitCarousel() {
+            console.log('🧪 Test: Reiniciar carrusel');
+            if (window.initCarousel) {
+                window.initCarousel();
+            }
+        }
+
+        // Verificar estado del carrusel
+        function checkCarouselStatus() {
+            const track = document.getElementById('carouselTrack');
+            const slides = track ? track.children.length : 0;
+            const indicators = document.querySelectorAll('.carousel-indicator').length;
+            
+            // Estado del carrusel
+            const statusEl = document.getElementById('carruselStatus');
+            if (window.carousel) {
+                statusEl.className = 'status success';
+                statusEl.textContent = '✅ Carrusel inicializado correctamente';
+            } else {
+                statusEl.className = 'status error';
+                statusEl.textContent = '❌ Carrusel NO inicializado';
+            }
+
+            // Info de slides
+            const slidesEl = document.getElementById('slidesInfo');
+            slidesEl.className = slides > 0 ? 'status success' : 'status error';
+            slidesEl.textContent = `📊 Slides encontrados: ${slides}`;
+
+            // Info de indicadores
+            const indicatorsEl = document.getElementById('indicatorsInfo');
+            indicatorsEl.className = indicators > 0 ? 'status success' : 'status warning';
+            indicatorsEl.textContent = `🔘 Indicadores: ${indicators}`;
+
+            // Info de autoplay
+            const autoplayEl = document.getElementById('autoplayInfo');
+            if (window.carousel && window.carousel.isPlaying) {
+                autoplayEl.className = 'status success';
+                autoplayEl.textContent = '▶️ AutoPlay activo';
+            } else {
+                autoplayEl.className = 'status warning';
+                autoplayEl.textContent = '⏸️ AutoPlay pausado';
+            }
+        }
+
+        // Verificar cada 2 segundos
+        setInterval(checkCarouselStatus, 2000);
+        setTimeout(checkCarouselStatus, 1000);
+    </script>
+</body>
+</html>

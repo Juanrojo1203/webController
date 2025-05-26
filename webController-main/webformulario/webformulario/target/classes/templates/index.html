@@ -130,8 +130,25 @@
   <p>Horario de atención: Lunes a Sábado de 8:00 a 9:00</p>
 </footer>
 
-<!-- JavaScript del carrusel manejado por CarruselController -->
-<script th:src="@{/js/carrusel.js(v='3.0')}"></script>
+<!-- JavaScript del carrusel OPTIMIZADO v4.0 -->
+<script th:src="@{/js/carrusel.js(v='4.0')}"></script>
+
+<!-- Debug del carrusel -->
+<script>
+console.log('🔍 Debug del carrusel en index.html');
+setTimeout(() => {
+    const track = document.getElementById('carouselTrack');
+    const slides = track ? track.children.length : 0;
+    const indicators = document.querySelectorAll('.carousel-indicator').length;
+    console.log(`📊 Slides: ${slides}, Indicadores: ${indicators}`);
+
+    if (window.carousel) {
+        console.log('✅ Carrusel inicializado correctamente');
+    } else {
+        console.error('❌ Carrusel NO inicializado');
+    }
+}, 1000);
+</script>
 
 </body>
 </html>
