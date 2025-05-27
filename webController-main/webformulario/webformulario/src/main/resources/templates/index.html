@@ -25,72 +25,183 @@
   <a href="/" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Inicio</a>
   <a href="/catalogo" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver catálogo</a>
   <a href="/carrito" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Ver Carrito</a>
+  <a href="/contacto" class="color-btn" style="display: inline-block; text-decoration: none; text-align: center;">Contacto</a>
 </nav>
 
-<!-- Carrusel generado dinámicamente desde CarruselController -->
-<div class="carousel-container">
-  <div class="carousel-header">
-    <h2>🏥 Productos Destacados de Farmacia</h2>
-    <p>Descubre nuestra amplia gama de medicamentos y productos para tu salud</p>
+<!-- 🚨 CARRUSEL SÚPER SIMPLE - DEBE VERSE AQUÍ 🚨 -->
+<div style="background: rgb(204, 119, 190); color: white; text-align: center; padding: 20px; font-size: 24px; font-weight: bold;">
+  🔥 super descuentos 🔥
+</div>
+
+<!-- CARRUSEL MEGA SIMPLE - SIN CSS EXTERNO -->
+<div style="
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  max-width: 1200px !important;
+  margin: 30px auto !important;
+  background: white !important;
+  border: 10px solid rgb(145, 202, 117) !important;
+  border-radius: 15px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  min-height: 500px !important;
+">
+  <!-- Header -->
+  <div style="background: linear-gradient(135deg, #a4e7aa, #66d875) !important; color: white !important; padding: 20px !important; text-align: center !important;">
+    <h2 style="margin: 0 !important; font-size: 24px !important; color: white !important;">🏥 Productos Destacados de Farmacia</h2>
+    <p style="margin: 5px 0 0 0 !important; color: white !important;">Descubre nuestra amplia gama de medicamentos y productos para tu salud</p>
   </div>
 
-  <div class="carousel-wrapper">
-    <div id="carouselTrack" class="carousel-track">
-      <!-- Slides dinámicos desde backend -->
-      <div th:each="slide, iterStat : ${slidesCarrusel}" class="carousel-slide">
-        <img th:src="${slide.imagen}" th:alt="${slide.titulo}">
-        <div class="carousel-slide-content">
-          <h3 th:text="${slide.titulo}">Título del slide</h3>
-          <p th:text="${slide.descripcion}">Descripción del slide</p>
-        </div>
-      </div>
-
-      <!-- Fallback: Slides estáticos si no hay datos del backend -->
-      <div th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" class="carousel-slide">
-        <img src="https://images.unsplash.com/photo-1576671081837-49000212a370?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80" alt="Medicamentos">
-        <div class="carousel-slide-content">
-          <h3>Medicamentos de Calidad</h3>
-          <p>Amplio catálogo de medicamentos genéricos y de marca</p>
-        </div>
-      </div>
-
-      <div th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" class="carousel-slide">
-        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80" alt="Vitaminas">
-        <div class="carousel-slide-content">
-          <h3>Vitaminas y Suplementos</h3>
-          <p>Fortalece tu sistema inmunológico</p>
-        </div>
-      </div>
-
-      <div th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" class="carousel-slide">
-        <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80" alt="Cuidado Personal">
-        <div class="carousel-slide-content">
-          <h3>Cuidado Personal</h3>
-          <p>Productos de higiene para toda la familia</p>
-        </div>
-      </div>
+  <!-- Slide Activo -->
+  <div id="carouselSlideContainer" onclick="clickSlide()" style="
+    position: relative !important;
+    height: 300px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, #4CAF50, #45a049) !important;
+    cursor: pointer !important;
+    transition: transform 0.3s ease !important;
+  " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+    <div style="text-align: center !important; color: white !important; padding: 40px !important;">
+      <h3 id="slideTitle" style="font-size: 48px !important; margin-bottom: 15px !important; color: white !important; text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;">💊 Medicamentos de Calidad</h3>
+      <p id="slideText" style="font-size: 24px !important; color: white !important; text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;">Amplio catálogo de medicamentos genéricos y de marca</p>
+      <p id="slideAction" style="font-size: 16px !important; color: rgba(255,255,255,0.9) !important; margin-top: 10px !important; font-style: italic !important;">👆 Haz clic para más información</p>
     </div>
-
-    <!-- Botones de navegación -->
-    <button onclick="moveSlide(-1)" class="carousel-nav prev">‹</button>
-    <button onclick="moveSlide(1)" class="carousel-nav next">›</button>
   </div>
 
-  <!-- Indicadores dinámicos -->
-  <div class="carousel-indicators">
-    <!-- Indicadores dinámicos desde backend -->
-    <span th:each="slide, iterStat : ${slidesCarrusel}"
-          th:onclick="'currentSlide(' + ${iterStat.index} + ')'"
-          class="carousel-indicator"
-          th:classappend="${iterStat.first} ? 'active' : ''">
-    </span>
+  <!-- Botones de navegación -->
+  <button onclick="cambiarSlide(-1)" style="
+    position: absolute !important;
+    top: 50% !important;
+    left: 20px !important;
+    transform: translateY(-50%) !important;
+    background: rgba(255,255,255,0.9) !important;
+    border: none !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    font-size: 30px !important;
+    color: #333 !important;
+    z-index: 100 !important;
+  ">‹</button>
 
-    <!-- Indicadores fallback si no hay datos del backend -->
-    <span th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" onclick="currentSlide(0)" class="carousel-indicator active"></span>
-    <span th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" onclick="currentSlide(1)" class="carousel-indicator"></span>
-    <span th:if="${slidesCarrusel == null or slidesCarrusel.isEmpty()}" onclick="currentSlide(2)" class="carousel-indicator"></span>
+  <button onclick="cambiarSlide(1)" style="
+    position: absolute !important;
+    top: 50% !important;
+    right: 20px !important;
+    transform: translateY(-50%) !important;
+    background: rgba(255,255,255,0.9) !important;
+    border: none !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    font-size: 30px !important;
+    color: #333 !important;
+    z-index: 100 !important;
+  ">›</button>
+
+  <!-- Indicadores -->
+  <div style="display: flex !important; justify-content: center !important; padding: 20px !important; gap: 15px !important;">
+    <span onclick="irASlide(0)" id="indicator0" style="width: 15px !important; height: 15px !important; border-radius: 50% !important; background: #66d875 !important; cursor: pointer !important; display: inline-block !important;"></span>
+    <span onclick="irASlide(1)" id="indicator1" style="width: 15px !important; height: 15px !important; border-radius: 50% !important; background: #ddd !important; cursor: pointer !important; display: inline-block !important;"></span>
+    <span onclick="irASlide(2)" id="indicator2" style="width: 15px !important; height: 15px !important; border-radius: 50% !important; background: #ddd !important; cursor: pointer !important; display: inline-block !important;"></span>
+    <span onclick="irASlide(3)" id="indicator3" style="width: 15px !important; height: 15px !important; border-radius: 50% !important; background: #ddd !important; cursor: pointer !important; display: inline-block !important;"></span>
   </div>
 </div>
+
+<!-- JAVASCRIPT MEGA SIMPLE INLINE -->
+<script>
+let slideActual = 0;
+const slides = [
+  {
+    titulo: "💊 Medicamentos de Calidad",
+    texto: "Amplio catálogo de medicamentos genéricos y de marca",
+    color: "linear-gradient(135deg, #4CAF50, #45a049)",
+    url: "/catalogo"
+  },
+  {
+    titulo: "🧠 Vitaminas y Suplementos",
+    texto: "Fortalece tu sistema inmunológico",
+    color: "linear-gradient(135deg, #FF6B6B, #FF5252)",
+    url: "/catalogo"
+  },
+  {
+    titulo: "🧴 Cuidado Personal",
+    texto: "Productos de higiene para toda la familia",
+    color: "linear-gradient(135deg, #9C27B0, #8E24AA)",
+    url: "/catalogo"
+  },
+  {
+    titulo: "👨‍⚕️ Atención Profesional",
+    texto: "Farmacéuticos certificados para asesorarte",
+    color: "linear-gradient(135deg, #2196F3, #1976D2)",
+    url: "/contacto"
+  }
+];
+
+function actualizarSlide() {
+  const container = document.getElementById('carouselSlideContainer');
+  const titulo = document.getElementById('slideTitle');
+  const texto = document.getElementById('slideText');
+  const accion = document.getElementById('slideAction');
+
+  if (container && titulo && texto && accion) {
+    container.style.background = slides[slideActual].color;
+    titulo.textContent = slides[slideActual].titulo;
+    texto.textContent = slides[slideActual].texto;
+
+    // Actualizar texto de acción según el slide
+    if (slideActual === 3) { // Slide de Atención Profesional
+      accion.textContent = "👆 Haz clic para contactarnos";
+    } else {
+      accion.textContent = "👆 Haz clic para ver catálogo";
+    }
+
+    // Actualizar indicadores
+    for (let i = 0; i < 4; i++) {
+      const indicator = document.getElementById('indicator' + i);
+      if (indicator) {
+        indicator.style.background = i === slideActual ? '#66d875' : '#ddd';
+      }
+    }
+
+    console.log('✅ Slide actualizado:', slideActual, slides[slideActual].titulo);
+  }
+}
+
+function cambiarSlide(direccion) {
+  slideActual += direccion;
+  if (slideActual >= slides.length) slideActual = 0;
+  if (slideActual < 0) slideActual = slides.length - 1;
+  actualizarSlide();
+}
+
+function irASlide(indice) {
+  slideActual = indice;
+  actualizarSlide();
+}
+
+// Función para manejar clic en slide
+function clickSlide() {
+  const url = slides[slideActual].url;
+  console.log('🎯 Clic en slide:', slides[slideActual].titulo, '-> Redirigiendo a:', url);
+  window.location.href = url;
+}
+
+// Auto-play
+setInterval(() => {
+  cambiarSlide(1);
+}, 5000);
+
+// Inicializar
+actualizarSlide();
+console.log('🎯 CARRUSEL MEGA SIMPLE INICIADO CON NAVEGACIÓN');
+</script>
 
 <!-- Información adicional sobre la farmacia con imágenes -->
 <section style="max-width: 900px; margin: 40px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
@@ -130,24 +241,13 @@
   <p>Horario de atención: Lunes a Sábado de 8:00 a 9:00</p>
 </footer>
 
-<!-- JavaScript del carrusel OPTIMIZADO v4.0 -->
-<script th:src="@{/js/carrusel.js(v='4.0')}"></script>
+<!-- JavaScript del carrusel SIMPLE v5.0 -->
+<script th:src="@{/js/carrusel.js(v='5.0')}"></script>
 
-<!-- Debug del carrusel -->
-<script>
-console.log('🔍 Debug del carrusel en index.html');
-setTimeout(() => {
-    const track = document.getElementById('carouselTrack');
-    const slides = track ? track.children.length : 0;
-    const indicators = document.querySelectorAll('.carousel-indicator').length;
-    console.log(`📊 Slides: ${slides}, Indicadores: ${indicators}`);
 
-    if (window.carousel) {
-        console.log('✅ Carrusel inicializado correctamente');
-    } else {
-        console.error('❌ Carrusel NO inicializado');
-    }
-}, 1000);
+
+
+
 </script>
 
 </body>

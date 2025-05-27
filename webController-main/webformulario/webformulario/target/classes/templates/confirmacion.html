@@ -17,33 +17,74 @@
   </div>
 </header>
 
-<div class="recibo">
-  <h2>¡Gracias por tu compra!</h2>
-  <p>Tu pedido ha sido procesado con éxito.</p>
+<div class="recibo" style="max-width: 800px; margin: 40px auto; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+  <div style="text-align: center; margin-bottom: 30px;">
+    <h2 style="color: #4CAF50; font-size: 36px; margin-bottom: 10px;">🎉 ¡Gracias por tu compra!</h2>
+    <p style="font-size: 18px; color: #666;">Tu pedido ha sido procesado y confirmado exitosamente.</p>
+  </div>
 
-  <table>
+  <!-- Información de la orden -->
+  <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 5px solid #4CAF50;">
+    <h3 style="color: #333; margin: 0 0 15px 0;">📋 Detalles de la Orden</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+      <div>
+        <strong>Número de Orden:</strong><br>
+        <span th:text="${numeroOrden}" style="color: #4CAF50; font-weight: bold;">ORD-20250101120000-ABC123</span>
+      </div>
+      <div>
+        <strong>Fecha de Compra:</strong><br>
+        <span th:text="${#temporals.format(fechaCompra, 'dd/MM/yyyy HH:mm')}" style="color: #666;">01/01/2025 12:00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de productos -->
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
     <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
+      <tr style="background: #4CAF50; color: white;">
+        <th style="padding: 15px; text-align: left; border-radius: 8px 0 0 8px;">Producto</th>
+        <th style="padding: 15px; text-align: center;">Cantidad</th>
+        <th style="padding: 15px; text-align: right;">Precio Unit.</th>
+        <th style="padding: 15px; text-align: right; border-radius: 0 8px 8px 0;">Subtotal</th>
       </tr>
     </thead>
     <tbody>
-      <tr th:each="item : ${carrito}">
-        <td th:text="${item.producto.nombre}"></td>
-        <td th:text="${item.cantidad}"></td>
-        <td>$<span th:text="${item.producto.precio}"></span></td>
+      <tr th:each="confirmacion : ${confirmaciones}" style="border-bottom: 1px solid #eee;">
+        <td style="padding: 15px; font-weight: bold;" th:text="${confirmacion.producto.nombre}">Producto</td>
+        <td style="padding: 15px; text-align: center;" th:text="${confirmacion.cantidad}">1</td>
+        <td style="padding: 15px; text-align: right;">$<span th:text="${#numbers.formatInteger(confirmacion.precioUnitario, 0)}">0</span></td>
+        <td style="padding: 15px; text-align: right; font-weight: bold; color: #4CAF50;">$<span th:text="${#numbers.formatInteger(confirmacion.subtotal, 0)}">0</span></td>
       </tr>
     </tbody>
   </table>
 
-  <div class="total">
-    Total pagado: $<span th:text="${#numbers.formatInteger(total, 0)}"></span>
+  <!-- Total -->
+  <div style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 30px;">
+    <h3 style="margin: 0; font-size: 24px;">💰 Total Pagado: $<span th:text="${#numbers.formatInteger(total, 0)}">0</span></h3>
   </div>
 
-  <div class="volver">
-    <a href="/">Volver al inicio</a>
+  <!-- Mensaje adicional -->
+  <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 5px solid #2196F3;">
+    <h4 style="color: #1976D2; margin: 0 0 10px 0;">📦 ¿Qué sigue?</h4>
+    <ul style="margin: 0; padding-left: 20px; color: #666;">
+      <li>Tu orden ha sido registrada en nuestro sistema</li>
+      <li>Recibirás una confirmación por email (si proporcionaste uno)</li>
+      <li>Puedes recoger tu pedido en nuestra farmacia</li>
+      <li>Guarda tu número de orden para futuras consultas</li>
+    </ul>
+  </div>
+
+  <!-- Botones de acción -->
+  <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+    <a href="/" style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+      🏠 Volver al Inicio
+    </a>
+    <a href="/catalogo" style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+      🛒 Seguir Comprando
+    </a>
+    <a href="/contacto" style="background: linear-gradient(135deg, #FF9800, #F57C00); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+      📞 Contactar Farmacia
+    </a>
   </div>
 </div>
 
