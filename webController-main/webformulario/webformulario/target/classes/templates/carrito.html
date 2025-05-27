@@ -68,8 +68,31 @@
   <div class="finalizar">
     <a href="/catalogo" class="seguir-comprando">Seguir comprando</a>
     <form th:action="@{/pagar}" method="post" style="display:inline;">
-      <button type="submit">Finalizar Compra</button>
+      <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold;">Finalizar Compra</button>
     </form>
+  </div>
+
+  <!-- Botones de administración para testing -->
+  <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 5px solid #FF9800;">
+    <h4 style="color: #FF9800; margin: 0 0 15px 0;">🔧 Herramientas de Administración</h4>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <form th:action="@{/carrito/reiniciar-ids}" method="post" style="display:inline;">
+        <button type="submit" style="background: #2196F3; color: white; padding: 8px 15px; border: none; border-radius: 5px; font-size: 14px;">
+          🔄 Reiniciar IDs
+        </button>
+      </form>
+
+      <form th:action="@{/carrito/vaciar-completo}" method="post" style="display:inline;"
+            onsubmit="return confirm('¿Estás seguro de vaciar completamente el carrito y reiniciar IDs?')">
+        <button type="submit" style="background: #FF5722; color: white; padding: 8px 15px; border: none; border-radius: 5px; font-size: 14px;">
+          🗑️ Vaciar + Reiniciar IDs
+        </button>
+      </form>
+    </div>
+    <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">
+      <strong>Reiniciar IDs:</strong> Reinicia el contador de IDs para que el próximo item agregado tenga ID = 1<br>
+      <strong>Vaciar + Reiniciar:</strong> Elimina todos los items y reinicia IDs automáticamente
+    </p>
   </div>
 </div>
 

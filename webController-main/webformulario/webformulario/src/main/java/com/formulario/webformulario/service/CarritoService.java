@@ -3,6 +3,8 @@ package com.formulario.webformulario.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.formulario.webformulario.Model.ItemCarrito;
 import com.formulario.webformulario.Model.Producto;
@@ -17,6 +19,8 @@ import java.util.*;
 @Service
 @Transactional
 public class CarritoService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CarritoService.class);
 
     @Autowired
     private ItemCarritoRepository itemCarritoRepository;
@@ -88,10 +92,41 @@ public class CarritoService {
     }
 
     /**
-     * Vaciar completamente el carrito
+     * Vaciar completamente el carrito y reiniciar IDs
      */
     public void vaciarCarrito() {
         itemCarritoRepository.deleteAll();
+        reiniciarIdsCarrito();
+    }
+
+    /**
+     * Reiniciar los IDs del carrito para que empiecen desde 1
+     */
+    public void reiniciarIdsCarrito() {
+        try {
+            // Solo reiniciar si la tabla está vacía
+            if (itemCarritoRepository.count() == 0) {
+                itemCarritoRepository.reiniciarAutoIncrement();
+                logger.info("🔄 IDs del carrito reiniciados - próximo ID será: 1");
+            }
+        } catch (Exception e) {
+            logger.warn("⚠️ No se pudo reiniciar AUTO_INCREMENT del carrito: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Vaciar carrito usando TRUNCATE (más eficiente y reinicia IDs automáticamente)
+     */
+    public void vaciarCarritoConTruncate() {
+        try {
+            itemCarritoRepository.truncarTablaCarrito();
+            logger.info("🗑️ Carrito vaciado con TRUNCATE - IDs reiniciados automáticamente");
+        } catch (Exception e) {
+            logger.warn("⚠️ Error con TRUNCATE, usando método alternativo: {}", e.getMessage());
+            // Fallback al método tradicional
+            itemCarritoRepository.deleteAll();
+            reiniciarIdsCarrito();
+        }
     }
 
     /**

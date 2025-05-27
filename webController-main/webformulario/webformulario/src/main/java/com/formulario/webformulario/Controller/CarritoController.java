@@ -133,4 +133,36 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Endpoint para reiniciar IDs del carrito manualmente (útil para testing)
+     */
+    @PostMapping("/carrito/reiniciar-ids")
+    public String reiniciarIdsCarrito(RedirectAttributes redirectAttributes) {
+        try {
+            carritoService.reiniciarIdsCarrito();
+            redirectAttributes.addFlashAttribute("mensaje", "IDs del carrito reiniciados exitosamente");
+            logger.info("🔄 IDs del carrito reiniciados manualmente");
+        } catch (Exception e) {
+            logger.error("❌ Error al reiniciar IDs del carrito: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error al reiniciar IDs del carrito");
+        }
+        return "redirect:/carrito";
+    }
+
+    /**
+     * Endpoint para vaciar carrito con TRUNCATE (reinicia IDs automáticamente)
+     */
+    @PostMapping("/carrito/vaciar-completo")
+    public String vaciarCarritoCompleto(RedirectAttributes redirectAttributes) {
+        try {
+            carritoService.vaciarCarritoConTruncate();
+            redirectAttributes.addFlashAttribute("mensaje", "Carrito vaciado completamente - IDs reiniciados");
+            logger.info("🗑️ Carrito vaciado completamente con reinicio de IDs");
+        } catch (Exception e) {
+            logger.error("❌ Error al vaciar carrito completamente: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error al vaciar carrito");
+        }
+        return "redirect:/carrito";
+    }
+
 }
