@@ -1,9 +1,3 @@
-/**
- * Carrusel Simple y Funcional
- * @version 5.0 - SIMPLIFICADO - Garantizado que funciona
- */
-
-console.log('🚀 Carrusel.js v5.0 cargado - SIMPLE Y FUNCIONAL');
 
 // Variables globales
 let currentSlideIndex = 0;
@@ -46,8 +40,6 @@ function showSlide(index) {
     if (indicators[currentSlideIndex]) {
         indicators[currentSlideIndex].classList.add('active');
     }
-
-    console.log(`📍 Mostrando slide ${currentSlideIndex + 1}/${slides.length}`);
 }
 
 // Función para mover slides
@@ -70,7 +62,7 @@ function startAutoPlay() {
         moveSlide(1);
     }, 4000);
 
-    console.log('▶️ AutoPlay iniciado');
+
 }
 
 // Función para pausar autoplay
@@ -79,18 +71,18 @@ function pauseAutoPlay() {
         clearInterval(carouselAutoPlay);
         carouselAutoPlay = null;
     }
-    console.log('⏸️ AutoPlay pausado');
+
 }
 
 // Función para inicializar el carrusel
 function initCarousel() {
-    console.log('🎠 Inicializando carrusel...');
+
 
     const slides = document.querySelectorAll('.carousel-slide');
-    console.log(`📊 Total de slides: ${slides.length}`);
+
 
     if (slides.length === 0) {
-        console.error('❌ No se encontraron slides');
+
         return;
     }
 
@@ -107,7 +99,7 @@ function initCarousel() {
     // Iniciar autoplay
     startAutoPlay();
 
-    console.log('✅ Carrusel inicializado correctamente');
+
 }
 
 // Inicializar cuando el DOM esté listo

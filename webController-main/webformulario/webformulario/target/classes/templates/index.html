@@ -169,8 +169,6 @@ function actualizarSlide() {
         indicator.style.background = i === slideActual ? '#66d875' : '#ddd';
       }
     }
-
-    console.log('✅ Slide actualizado:', slideActual, slides[slideActual].titulo);
   }
 }
 
@@ -200,7 +198,6 @@ setInterval(() => {
 
 // Inicializar
 actualizarSlide();
-console.log('🎯 CARRUSEL MEGA SIMPLE INICIADO CON NAVEGACIÓN');
 </script>
 
 <!-- Información adicional sobre la farmacia con imágenes -->
@@ -233,7 +230,26 @@ console.log('🎯 CARRUSEL MEGA SIMPLE INICIADO CON NAVEGACIÓN');
     </a>
   </div>
 </section>
-
+<!-- Misión y Visión -->
+<section style="max-width: 900px; margin: 40px auto; padding: 20px; background-color: #f8f9fa; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+  <h2 style="color: #333; text-align: center; margin-bottom: 30px;">Nuestra Misión y Visión</h2>
+  
+  <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px; background: white; padding: 25px; border-radius: 10px; border-left: 5px solid #4CAF50;">
+      <h3 style="color: #4CAF50; margin-bottom: 15px;">Misión</h3>
+      <p style="color: #555; line-height: 1.6;">
+        Proporcionar productos farmacéuticos y servicios de salud de alta calidad, garantizando accesibilidad y atención personalizada para mejorar la calidad de vida de nuestros clientes, con un equipo profesional comprometido con la excelencia y el bienestar comunitario.
+      </p>
+    </div>
+    
+    <div style="flex: 1; min-width: 300px; background: white; padding: 25px; border-radius: 10px; border-left: 5px solid #2196F3;">
+      <h3 style="color: #2196F3; margin-bottom: 15px;">Visión</h3>
+      <p style="color: #555; line-height: 1.6;">
+        Ser reconocidos como la farmacia líder en innovación y servicio al cliente, expandiendo nuestra presencia mientras mantenemos la calidez de una farmacia familiar, integrando tecnología avanzada con atención humana para convertirnos en aliados indispensables en el cuidado integral de la salud.
+      </p>
+    </div>
+  </div>
+</section>
 <!-- Footer -->
 <footer style="background-color: #a4e7aa; color: white; text-align: center; padding: 20px; margin-top: 40px;">
   <p>&copy; 2025 La SuperFarmacia. Todos los derechos reservados.</p>
